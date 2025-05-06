@@ -1,0 +1,45 @@
+{% extends 'theme.html' %}
+
+{% block main %}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6">
+            <div>
+                <h1>Create An account?</h1>
+                {% if message %}
+                <div class="alert alert-danger" role="alert">
+                    {{ message }}
+                </div>
+                {% endif %}
+                <form method="POST" class="mt-4">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                  <label=firstname class="form-label">First Name</label>
+                  <input type="text" class="form-control" id="firstname" name="firstname" required> 
+                  <label=lastname class="form-label">Last Name</label>
+                  <input type="text" class="form-control" id="lastname" name="lastname" required>
+                  <label=email class="form-label">Email address</label>     
+                    <input type="email" class="form-control" id="email" name="email" required>
+                    <label=phone class="form-label">Phone Number</label>
+                    <input type="text" class="form-control" id="phone" name="phone" required>
+                    <label=password class="form-label">Password</label>
+                        
+                    <input type="password" class="form-control" id="password" name="password" required>
+                    <label=confirm_password class="form-label">Confirm Password</label>
+                    <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
+                    
+
+                    <button type="submit" class="btn btn-primary">Sign Up</button>
+                    <div class="mt-3">
+                        <p>Already have an account? <a href="login">Login here</a></p>          
+            </div >
+
+                    <div class="mb-3">
+                        <p>By signing up, you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.</p>
+                    </div>
+                </form> 
+            </form> 
+        </div>
+    </div>
+</div>
+{%endblock %}

@@ -1,0 +1,33 @@
+{%extends 'theme.html' %}
+{% block main %}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="border shadow-sm p-4 rounded mt-5 bg-light">
+                <h1>login</h1>
+                <form method="POST" class="border p-4 mt-4">
+                    {% csrf_token %}
+                    {% if message %}
+                    <div class="alert alert-danger" role="alert">
+                        {{ message }}
+                    </div>
+                    {% endif %}
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email address</label>
+                        <input type="email" class="form-control" id="email" name="email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="password" name="password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Login</button>`
+            </div>
+        </div>
+    </div>
+</div>
+{%endblock %}
+{% block footer %}
+    <footer class="text-center mt-5">
+        <p>&copy; 2023 My Shop. All rights reserved.</p>
+    </footer>
+{% endblock %}

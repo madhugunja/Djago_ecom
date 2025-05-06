@@ -1,0 +1,84 @@
+{% extends 'theme.html' %}
+
+{% block main %}
+<div class="container my-5">
+    <h1 class="mb-4 text-center">🛒 Your Shopping Cart</h1>
+
+    {% if cart_items %}
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Product</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Total</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in cart_items %}
+                    <tr>
+                        <td>{{ item.product.name }}</td>
+                        <td>${{ item.product.price }}</td>
+                        <td>
+                            <form method="POST" action="{% url 'add_to_cart' 0 %}">
+                                {% csrf_token %}
+                                <select name="product_id" class="form-select mb-3">
+                                    {% for product in products %}
+                                        <option value="{{ product.id }}">{{ product.name }}</option>
+                                    {% endfor %}
+                                </select>
+                                <input type="number" name="quantity" class="form-control mb-3" placeholder="Enter quantity" required>
+                                <button type="submit" class="btn btn-primary">Add to Cart</button>
+                            </form>
+                        </td>
+                        <td>${{ item.total }}</td>
+                        <td>
+                            <form method="POST" action="{% url 'remove_from_cart' %}">
+                                {% csrf_token %}
+                                <input type="hidden" name="product_id" value="{{ item.product.id }}">
+                                <button class="btn btn-sm btn-danger">Remove</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="row mt-5">
+            <div class="col-md-6">
+                <div class="card p-4 shadow-sm">
+                    <h4>Add a Product</h4>
+                    <form method="POST" action="{% url 'add_to_cart' 0 %}">
+                        {% csrf_token %}
+                        <select name="product_id" class="form-select mb-3">
+                            {% for product in products %}
+                                <option value="{{ product.id }}">{{ product.name }}</option>
+                            {% endfor %}
+                        </select>
+                        <input type="number" name="quantity" class="form-control mb-3" placeholder="Enter quantity" required>
+                        <button type="submit" class="btn btn-primary w-100">Add to Cart</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card p-4 shadow-sm">
+                    <h4>Cart Summary</h4>
+                    <p class="fs-5">Total Items: {{ cart_items|length }}</p>
+                    <h3>Total Price: ${{ total_price }}</h3>
+                    <a href="#" class="btn btn-success w-100 mt-3">Proceed to Checkout</a>
+                    <a href="{% url 'home' %}" class="btn btn-outline-secondary w-100 mt-2">Continue Shopping</a>
+                </div>
+            </div>
+        </div>
+
+    {% else %}
+        <div class="alert alert-info text-center">
+            Your cart is empty. <a href="{% url 'home' %}" class="btn btn-sm btn-primary ms-2">Start Shopping</a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
